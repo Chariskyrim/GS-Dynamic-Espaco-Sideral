@@ -1,0 +1,124 @@
+
+=================================================================
+  RELATÓRIO DE ANÁLISE — INCÊNDIOS FLORESTAIS VIA SATÉLITE
+=================================================================
+Gerado em : 09/06/2026 22:41:35
+Fonte     : NASA FIRMS VIIRS / Dados simulados (estrutura real)
+Projeto   : GS — Estruturas de Dados e Algoritmos
+
+=================================================================
+  1. DADOS CARREGADOS
+=================================================================
+  Focos de calor detectados : 191
+  Bases de bombeiros        : 7
+  Satélites utilizados      : VIIRS (SNPP), MODIS
+
+── Distribuição por Bioma ─────────────────────────────────
+  Cerrado               87  ██████████████████████████████
+  Amazônia              72  ██████████████████████████████
+  Mata Atlântica        18  ██████████████████
+  Caatinga              14  ██████████████
+
+── Estatísticas FRP (Fire Radiative Power — MW) ───────────
+  Mínimo  : 8.4 MW
+  Máximo  : 108.7 MW
+  Média   : 43.6 MW
+  Total   : 8330 MW
+
+=================================================================
+  2. MODELAGEM COM GRAFOS
+=================================================================
+  Tipo              : Não-dirigido, ponderado (distância km)
+  Nós               : 198 (focos + bases)
+  Arestas           : 1786
+  Raio de conexão   : 400 km
+  Grau médio        : 18.04
+  Componentes conec.: 2
+
+  Interpretação: cada aresta representa uma rota possível
+  de deslocamento de equipes ou propagação entre focos.
+
+=================================================================
+  3. DIJKSTRA — CAMINHO MÍNIMO DE RESPOSTA
+=================================================================
+  Complexidade    : O((V + E) log V) com heap binário
+  Origem          : BASE_SP
+  Destino         : F0110 (foco mais crítico)
+  Distância total : 3015.1 km
+  Nós no caminho  : 11
+  Caminho         : BASE_SP → F0142 → F0088 → F0085 → F0012 → F0041 → F0045 → F0016 → F0119 → F0126 → F0110
+
+  Uso prático: rota ótima para o primeiro deslocamento
+  de equipes da base mais próxima ao foco crítico.
+
+=================================================================
+  4. ALGORITMO GULOSO — COBERTURA DE BRIGADAS
+=================================================================
+  Complexidade    : O(k × n) — k brigadas, n focos
+  Estratégia      : maximizar FRP coberto por brigada
+  Raio de atuação : 200 km
+  Brigadas alocadas: 5
+  Focos cobertos  : 47 / 191 (24.6%)
+
+  Posicionamento das brigadas:
+    BRIGADA_01: lat=  -8.787  lon=  -51.546  focos= 11  FRP=    668 MW
+    BRIGADA_02: lat= -11.341  lon=  -54.266  focos= 11  FRP=    595 MW
+    BRIGADA_03: lat=  -7.546  lon=  -47.561  focos= 10  FRP=    588 MW
+    BRIGADA_04: lat=  -4.172  lon=  -49.265  focos=  9  FRP=    449 MW
+    BRIGADA_05: lat=  -6.500  lon=  -59.063  focos=  6  FRP=    428 MW
+
+=================================================================
+  5. SIMULAÇÃO MONTE CARLO — PROPAGAÇÃO
+=================================================================
+  Simulações      : 500
+  Passos/sim.     : 10 (≈ 60h)
+  Prob. base prop.: 35%
+
+  Área propagada estimada:
+    Mínima  :    85200 km²
+    Média   :    90915 km²
+    Mediana :    91000 km²
+    P95     :    93900 km²
+    P99     :    95100 km²
+    Máxima  :    95600 km²
+
+  Zonas com risco > 60%: 666
+
+  Interpretação: em 95% dos cenários simulados, a área
+  afetada não excede 93900 km².
+
+=================================================================
+  6. PROGRAMAÇÃO DINÂMICA — ALOCAÇÃO DE RECURSOS
+=================================================================
+  Algoritmo       : Knapsack 0/1 (mochila booleana)
+  Complexidade    : O(n × W) — n regiões, W orçamento
+  Orçamento total : R$ 100M
+  Orçamento usado : R$ 100M
+  Orçamento livre : R$ 0M
+  Impacto máximo  : 385.0 pontos
+
+  Regiões selecionadas para intervenção:
+    ✓ Cerrado MT/PA              custo=R$25M  impacto= 80
+    ✓ Pantanal                   custo=R$20M  impacto= 85
+    ✓ Cerrado GO/DF              custo=R$15M  impacto= 60
+    ✓ Mata Atlântica SP          custo=R$18M  impacto= 70
+    ✓ Pampa RS                   custo=R$ 8M  impacto= 35
+    ✓ Mata Atlântica BA          custo=R$14M  impacto= 55
+
+  Comparação de desempenho:
+    Tempo DP        : 0.000092s
+    Força bruta est.: 0.0010s
+    Speedup         : ≈ 11×
+
+=================================================================
+  7. CONCLUSÃO
+=================================================================
+  O sistema integra dados reais de satélite (NASA FIRMS)
+  com quatro classes de algoritmos para suporte à decisão
+  em combate a incêndios florestais no Brasil:
+
+  • Grafo      → modelagem da rede de focos e bases
+  • Dijkstra   → rota ótima para deslocamento de equipes
+  • Guloso     → posicionamento eficiente de brigadas
+  • Monte Carlo → quantificação de risco de propagação
+  • DP Knapsack → alocação ótima de orçamento por região

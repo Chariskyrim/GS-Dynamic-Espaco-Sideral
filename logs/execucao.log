@@ -1,0 +1,517 @@
+2026-06-09 22:37:41,537 [INFO] Iniciando sistema de monitoramento de incêndios florestais
+2026-06-09 22:37:41,537 [INFO] 
+2026-06-09 22:37:41,537 [INFO] ============================================================
+2026-06-09 22:37:41,537 [INFO]   1. CARREGAMENTO E PRÉ-PROCESSAMENTO DE DADOS
+2026-06-09 22:37:41,537 [INFO] ============================================================
+2026-06-09 22:37:42,376 [WARNING] API NASA indisponível (HTTP Error 400: Bad Request). Usando dados locais.
+2026-06-09 22:37:42,383 [INFO] Dados simulados (estrutura FIRMS real): 191 registros
+2026-06-09 22:37:42,383 [INFO]   Focos carregados  : 191
+2026-06-09 22:37:42,383 [INFO]   Bases de bombeiros: 7
+2026-06-09 22:37:42,383 [INFO]   Regiões analisadas: 10
+2026-06-09 22:37:42,383 [INFO] 
+2026-06-09 22:37:42,383 [INFO] ============================================================
+2026-06-09 22:37:42,383 [INFO]   2. CONSTRUÇÃO DO GRAFO DE FOCOS
+2026-06-09 22:37:42,384 [INFO] ============================================================
+2026-06-09 22:37:42,402 [INFO] Grafo construído: 198 nós, 1786 arestas (raio=400km)
+2026-06-09 22:37:42,402 [INFO]   Nós   : 198
+2026-06-09 22:37:42,402 [INFO]   Arestas: 1786
+2026-06-09 22:37:42,403 [INFO]   Componentes conectados: 2
+2026-06-09 22:37:42,403 [INFO]   Tempo de construção: 0.0184s
+2026-06-09 22:37:42,403 [INFO] 
+2026-06-09 22:37:42,403 [INFO] ============================================================
+2026-06-09 22:37:42,403 [INFO]   3. DIJKSTRA — CAMINHO MÍNIMO DE RESPOSTA
+2026-06-09 22:37:42,403 [INFO] ============================================================
+2026-06-09 22:37:42,404 [INFO]   Origem  : BASE_SP
+2026-06-09 22:37:42,404 [INFO]   Destino : F0110 (foco mais crítico)
+2026-06-09 22:37:42,404 [INFO]   Distância mínima: 3015.1 km
+2026-06-09 22:37:42,404 [INFO]   Caminho : BASE_SP → F0142 → F0088 → F0085 → F0012 → F0041 → F0045 → F0016 → F0119 → F0126 → F0110
+2026-06-09 22:37:42,405 [INFO]   Tempo Dijkstra : 0.000563s
+2026-06-09 22:37:42,405 [INFO]   Tempo BFS (força bruta): 0.000364s
+2026-06-09 22:37:42,405 [INFO] 
+2026-06-09 22:37:42,405 [INFO] ============================================================
+2026-06-09 22:37:42,405 [INFO]   4. ALGORITMO GULOSO — COBERTURA MÍNIMA DE BRIGADAS
+2026-06-09 22:37:42,405 [INFO] ============================================================
+2026-06-09 22:37:42,539 [INFO] Guloso: 5 brigadas cobrem 47/191 focos (24.6%)
+2026-06-09 22:37:42,539 [INFO]   Brigadas alocadas: 5
+2026-06-09 22:37:42,539 [INFO]   Focos cobertos   : 47 / 191 (24.6%)
+2026-06-09 22:37:42,539 [INFO]     Brigada 1: lat=-8.79, lon=-51.55, focos=11, FRP_total=668
+2026-06-09 22:37:42,539 [INFO]     Brigada 2: lat=-11.34, lon=-54.27, focos=11, FRP_total=595
+2026-06-09 22:37:42,539 [INFO]     Brigada 3: lat=-7.55, lon=-47.56, focos=10, FRP_total=588
+2026-06-09 22:37:42,540 [INFO]     Brigada 4: lat=-4.17, lon=-49.26, focos=9, FRP_total=449
+2026-06-09 22:37:42,540 [INFO]     Brigada 5: lat=-6.50, lon=-59.06, focos=6, FRP_total=428
+2026-06-09 22:37:42,540 [INFO]   Tempo guloso: 0.133522s
+2026-06-09 22:37:42,540 [INFO] 
+2026-06-09 22:37:42,540 [INFO] ============================================================
+2026-06-09 22:37:42,540 [INFO]   5. MONTE CARLO — SIMULAÇÃO DE PROPAGAÇÃO
+2026-06-09 22:37:42,540 [INFO] ============================================================
+2026-06-09 22:37:43,016 [INFO] Monte Carlo: média=90816km², P95=93400km², zonas_risco_alto=677
+2026-06-09 22:37:43,016 [INFO]   Simulações      : 500
+2026-06-09 22:37:43,016 [INFO]   Área média afetada : 90816.0 km²
+2026-06-09 22:37:43,016 [INFO]   Área máx. (95°p): 93400.0 km²
+2026-06-09 22:37:43,016 [INFO]   Risco alto (>60%): 677 zonas
+2026-06-09 22:37:43,016 [INFO]   Tempo simulação : 0.4757s
+2026-06-09 22:37:43,017 [INFO] 
+2026-06-09 22:37:43,017 [INFO] ============================================================
+2026-06-09 22:37:43,017 [INFO]   6. PROG. DINÂMICA — ALOCAÇÃO ÓTIMA DE RECURSOS
+2026-06-09 22:37:43,017 [INFO] ============================================================
+2026-06-09 22:37:43,017 [INFO] DP Knapsack: 6/10 regiões, impacto=385.0, orçamento usado=R$100M
+2026-06-09 22:37:43,017 [INFO]   Tempo DP=0.000098s vs força_bruta≈0.0010s (speedup ≈10.5x)
+2026-06-09 22:37:43,017 [INFO]   Orçamento total : R$ 100M
+2026-06-09 22:37:43,017 [INFO]   Impacto máximo  : 385.0 pts
+2026-06-09 22:37:43,018 [INFO]   Regiões atendidas:
+2026-06-09 22:37:43,018 [INFO]     Cerrado MT/PA        custo=R$25M  impacto=80
+2026-06-09 22:37:43,018 [INFO]     Pantanal             custo=R$20M  impacto=85
+2026-06-09 22:37:43,018 [INFO]     Cerrado GO/DF        custo=R$15M  impacto=60
+2026-06-09 22:37:43,018 [INFO]     Mata Atlântica SP    custo=R$18M  impacto=70
+2026-06-09 22:37:43,018 [INFO]     Pampa RS             custo=R$8M  impacto=35
+2026-06-09 22:37:43,018 [INFO]     Mata Atlântica BA    custo=R$14M  impacto=55
+2026-06-09 22:37:43,018 [INFO]   Tempo DP        : 0.000366s
+2026-06-09 22:37:43,018 [INFO]   Comparação — força bruta O(2^n): estimado 0.0010s
+2026-06-09 22:37:43,019 [INFO] 
+2026-06-09 22:37:43,019 [INFO] ============================================================
+2026-06-09 22:37:43,019 [INFO]   7. GERAÇÃO DE VISUALIZAÇÕES
+2026-06-09 22:37:43,019 [INFO] ============================================================
+2026-06-09 22:37:45,965 [INFO] Grafo salvo: output/grafo_incendios.png
+2026-06-09 22:37:46,424 [INFO] Mapa de calor salvo: output/mapa_calor.png
+2026-06-09 22:37:46,424 [INFO]   Gráficos salvos em output/
+2026-06-09 22:37:46,424 [INFO] 
+2026-06-09 22:37:46,425 [INFO] ============================================================
+2026-06-09 22:37:46,425 [INFO]   8. RELATÓRIO FINAL
+2026-06-09 22:37:46,425 [INFO] ============================================================
+2026-06-09 22:37:46,426 [INFO] Relatório salvo: output/relatorio_final.txt
+2026-06-09 22:37:46,426 [INFO]   Relatório salvo em output/relatorio_final.txt
+2026-06-09 22:37:46,426 [INFO] 
+2026-06-09 22:37:46,426 [INFO] ============================================================
+2026-06-09 22:37:46,426 [INFO]   EXECUÇÃO CONCLUÍDA
+2026-06-09 22:37:46,426 [INFO] ============================================================
+2026-06-09 22:37:46,426 [INFO]   Tempo total: 4.89s
+2026-06-09 22:38:44,058 [INFO] Iniciando sistema de monitoramento de incêndios florestais
+2026-06-09 22:38:44,058 [INFO] 
+2026-06-09 22:38:44,058 [INFO] ============================================================
+2026-06-09 22:38:44,058 [INFO]   1. CARREGAMENTO E PRÉ-PROCESSAMENTO DE DADOS
+2026-06-09 22:38:44,058 [INFO] ============================================================
+2026-06-09 22:38:44,059 [INFO] Focos carregados do cache local
+2026-06-09 22:38:44,059 [INFO]   Focos carregados  : 191
+2026-06-09 22:38:44,059 [INFO]   Bases de bombeiros: 7
+2026-06-09 22:38:44,059 [INFO]   Regiões analisadas: 10
+2026-06-09 22:38:44,059 [INFO] 
+2026-06-09 22:38:44,059 [INFO] ============================================================
+2026-06-09 22:38:44,060 [INFO]   2. CONSTRUÇÃO DO GRAFO DE FOCOS
+2026-06-09 22:38:44,060 [INFO] ============================================================
+2026-06-09 22:38:44,075 [INFO] Grafo construído: 198 nós, 1786 arestas (raio=400km)
+2026-06-09 22:38:44,075 [INFO]   Nós   : 198
+2026-06-09 22:38:44,075 [INFO]   Arestas: 1786
+2026-06-09 22:38:44,076 [INFO]   Componentes conectados: 2
+2026-06-09 22:38:44,076 [INFO]   Tempo de construção: 0.0154s
+2026-06-09 22:38:44,076 [INFO] 
+2026-06-09 22:38:44,076 [INFO] ============================================================
+2026-06-09 22:38:44,076 [INFO]   3. DIJKSTRA — CAMINHO MÍNIMO DE RESPOSTA
+2026-06-09 22:38:44,076 [INFO] ============================================================
+2026-06-09 22:38:44,077 [INFO]   Origem  : BASE_SP
+2026-06-09 22:38:44,077 [INFO]   Destino : F0110 (foco mais crítico)
+2026-06-09 22:38:44,077 [INFO]   Distância mínima: 3015.1 km
+2026-06-09 22:38:44,077 [INFO]   Caminho : BASE_SP → F0142 → F0088 → F0085 → F0012 → F0041 → F0045 → F0016 → F0119 → F0126 → F0110
+2026-06-09 22:38:44,077 [INFO]   Tempo Dijkstra : 0.000466s
+2026-06-09 22:38:44,080 [INFO]   Tempo BFS (força bruta): 0.002304s
+2026-06-09 22:38:44,080 [INFO] 
+2026-06-09 22:38:44,080 [INFO] ============================================================
+2026-06-09 22:38:44,080 [INFO]   4. ALGORITMO GULOSO — COBERTURA MÍNIMA DE BRIGADAS
+2026-06-09 22:38:44,080 [INFO] ============================================================
+2026-06-09 22:38:44,187 [INFO] Guloso: 5 brigadas cobrem 47/191 focos (24.6%)
+2026-06-09 22:38:44,187 [INFO]   Brigadas alocadas: 5
+2026-06-09 22:38:44,187 [INFO]   Focos cobertos   : 47 / 191 (24.6%)
+2026-06-09 22:38:44,188 [INFO]     Brigada 1: lat=-8.79, lon=-51.55, focos=11, FRP_total=668
+2026-06-09 22:38:44,188 [INFO]     Brigada 2: lat=-11.34, lon=-54.27, focos=11, FRP_total=595
+2026-06-09 22:38:44,188 [INFO]     Brigada 3: lat=-7.55, lon=-47.56, focos=10, FRP_total=588
+2026-06-09 22:38:44,188 [INFO]     Brigada 4: lat=-4.17, lon=-49.26, focos=9, FRP_total=449
+2026-06-09 22:38:44,188 [INFO]     Brigada 5: lat=-6.50, lon=-59.06, focos=6, FRP_total=428
+2026-06-09 22:38:44,188 [INFO]   Tempo guloso: 0.107147s
+2026-06-09 22:38:44,188 [INFO] 
+2026-06-09 22:38:44,188 [INFO] ============================================================
+2026-06-09 22:38:44,188 [INFO]   5. MONTE CARLO — SIMULAÇÃO DE PROPAGAÇÃO
+2026-06-09 22:38:44,189 [INFO] ============================================================
+2026-06-09 22:38:44,615 [INFO] Monte Carlo: média=90872km², P95=93800km², zonas_risco_alto=669
+2026-06-09 22:38:44,616 [INFO]   Simulações      : 500
+2026-06-09 22:38:44,616 [INFO]   Área média afetada : 90871.6 km²
+2026-06-09 22:38:44,616 [INFO]   Área máx. (95°p): 93800.0 km²
+2026-06-09 22:38:44,616 [INFO]   Risco alto (>60%): 669 zonas
+2026-06-09 22:38:44,616 [INFO]   Tempo simulação : 0.4271s
+2026-06-09 22:38:44,616 [INFO] 
+2026-06-09 22:38:44,617 [INFO] ============================================================
+2026-06-09 22:38:44,617 [INFO]   6. PROG. DINÂMICA — ALOCAÇÃO ÓTIMA DE RECURSOS
+2026-06-09 22:38:44,617 [INFO] ============================================================
+2026-06-09 22:38:44,617 [INFO] DP Knapsack: 6/10 regiões, impacto=385.0, orçamento usado=R$100M
+2026-06-09 22:38:44,617 [INFO]   Tempo DP=0.000100s vs força_bruta≈0.0010s (speedup ≈10.2x)
+2026-06-09 22:38:44,617 [INFO]   Orçamento total : R$ 100M
+2026-06-09 22:38:44,617 [INFO]   Impacto máximo  : 385.0 pts
+2026-06-09 22:38:44,617 [INFO]   Regiões atendidas:
+2026-06-09 22:38:44,617 [INFO]     Cerrado MT/PA        custo=R$25M  impacto=80
+2026-06-09 22:38:44,617 [INFO]     Pantanal             custo=R$20M  impacto=85
+2026-06-09 22:38:44,618 [INFO]     Cerrado GO/DF        custo=R$15M  impacto=60
+2026-06-09 22:38:44,618 [INFO]     Mata Atlântica SP    custo=R$18M  impacto=70
+2026-06-09 22:38:44,618 [INFO]     Pampa RS             custo=R$8M  impacto=35
+2026-06-09 22:38:44,618 [INFO]     Mata Atlântica BA    custo=R$14M  impacto=55
+2026-06-09 22:38:44,618 [INFO]   Tempo DP        : 0.000335s
+2026-06-09 22:38:44,618 [INFO]   Comparação — força bruta O(2^n): estimado 0.0010s
+2026-06-09 22:38:44,618 [INFO] 
+2026-06-09 22:38:44,618 [INFO] ============================================================
+2026-06-09 22:38:44,618 [INFO]   7. GERAÇÃO DE VISUALIZAÇÕES
+2026-06-09 22:38:44,618 [INFO] ============================================================
+2026-06-09 22:38:46,263 [INFO] Grafo salvo: output/grafo_incendios.png
+2026-06-09 22:38:46,732 [INFO] Mapa de calor salvo: output/mapa_calor.png
+2026-06-09 22:38:46,732 [INFO]   Gráficos salvos em output/
+2026-06-09 22:38:46,733 [INFO] 
+2026-06-09 22:38:46,733 [INFO] ============================================================
+2026-06-09 22:38:46,733 [INFO]   8. RELATÓRIO FINAL
+2026-06-09 22:38:46,733 [INFO] ============================================================
+2026-06-09 22:38:46,734 [INFO] Relatório salvo: output/relatorio_final.txt
+2026-06-09 22:38:46,734 [INFO]   Relatório salvo em output/relatorio_final.txt
+2026-06-09 22:38:46,734 [INFO] 
+2026-06-09 22:38:46,734 [INFO] ============================================================
+2026-06-09 22:38:46,734 [INFO]   EXECUÇÃO CONCLUÍDA
+2026-06-09 22:38:46,734 [INFO] ============================================================
+2026-06-09 22:38:46,735 [INFO]   Tempo total: 2.68s
+2026-06-09 22:39:12,479 [INFO] Iniciando sistema de monitoramento de incêndios florestais
+2026-06-09 22:39:12,479 [INFO] 
+2026-06-09 22:39:12,480 [INFO] ============================================================
+2026-06-09 22:39:12,480 [INFO]   1. CARREGAMENTO E PRÉ-PROCESSAMENTO DE DADOS
+2026-06-09 22:39:12,480 [INFO] ============================================================
+2026-06-09 22:39:12,480 [INFO] Focos carregados do cache local
+2026-06-09 22:39:12,481 [INFO]   Focos carregados  : 191
+2026-06-09 22:39:12,481 [INFO]   Bases de bombeiros: 7
+2026-06-09 22:39:12,481 [INFO]   Regiões analisadas: 10
+2026-06-09 22:39:12,481 [INFO] 
+2026-06-09 22:39:12,481 [INFO] ============================================================
+2026-06-09 22:39:12,481 [INFO]   2. CONSTRUÇÃO DO GRAFO DE FOCOS
+2026-06-09 22:39:12,481 [INFO] ============================================================
+2026-06-09 22:39:12,496 [INFO] Grafo construído: 198 nós, 1786 arestas (raio=400km)
+2026-06-09 22:39:12,496 [INFO]   Nós   : 198
+2026-06-09 22:39:12,497 [INFO]   Arestas: 1786
+2026-06-09 22:39:12,497 [INFO]   Componentes conectados: 2
+2026-06-09 22:39:12,497 [INFO]   Tempo de construção: 0.0154s
+2026-06-09 22:39:12,497 [INFO] 
+2026-06-09 22:39:12,497 [INFO] ============================================================
+2026-06-09 22:39:12,497 [INFO]   3. DIJKSTRA — CAMINHO MÍNIMO DE RESPOSTA
+2026-06-09 22:39:12,498 [INFO] ============================================================
+2026-06-09 22:39:12,498 [INFO]   Origem  : BASE_SP
+2026-06-09 22:39:12,498 [INFO]   Destino : F0110 (foco mais crítico)
+2026-06-09 22:39:12,498 [INFO]   Distância mínima: 3015.1 km
+2026-06-09 22:39:12,499 [INFO]   Caminho : BASE_SP → F0142 → F0088 → F0085 → F0012 → F0041 → F0045 → F0016 → F0119 → F0126 → F0110
+2026-06-09 22:39:12,499 [INFO]   Tempo Dijkstra : 0.000523s
+2026-06-09 22:39:12,502 [INFO]   Tempo BFS (força bruta): 0.003171s
+2026-06-09 22:39:12,502 [INFO] 
+2026-06-09 22:39:12,502 [INFO] ============================================================
+2026-06-09 22:39:12,502 [INFO]   4. ALGORITMO GULOSO — COBERTURA MÍNIMA DE BRIGADAS
+2026-06-09 22:39:12,502 [INFO] ============================================================
+2026-06-09 22:39:12,613 [INFO] Guloso: 5 brigadas cobrem 47/191 focos (24.6%)
+2026-06-09 22:39:12,613 [INFO]   Brigadas alocadas: 5
+2026-06-09 22:39:12,613 [INFO]   Focos cobertos   : 47 / 191 (24.6%)
+2026-06-09 22:39:12,613 [INFO]     Brigada 1: lat=-8.79, lon=-51.55, focos=11, FRP_total=668
+2026-06-09 22:39:12,613 [INFO]     Brigada 2: lat=-11.34, lon=-54.27, focos=11, FRP_total=595
+2026-06-09 22:39:12,613 [INFO]     Brigada 3: lat=-7.55, lon=-47.56, focos=10, FRP_total=588
+2026-06-09 22:39:12,614 [INFO]     Brigada 4: lat=-4.17, lon=-49.26, focos=9, FRP_total=449
+2026-06-09 22:39:12,614 [INFO]     Brigada 5: lat=-6.50, lon=-59.06, focos=6, FRP_total=428
+2026-06-09 22:39:12,614 [INFO]   Tempo guloso: 0.110398s
+2026-06-09 22:39:12,614 [INFO] 
+2026-06-09 22:39:12,614 [INFO] ============================================================
+2026-06-09 22:39:12,614 [INFO]   5. MONTE CARLO — SIMULAÇÃO DE PROPAGAÇÃO
+2026-06-09 22:39:12,614 [INFO] ============================================================
+2026-06-09 22:39:13,054 [INFO] Monte Carlo: média=90960km², P95=94100km², zonas_risco_alto=668
+2026-06-09 22:39:13,054 [INFO]   Simulações      : 500
+2026-06-09 22:39:13,054 [INFO]   Área média afetada : 90959.8 km²
+2026-06-09 22:39:13,054 [INFO]   Área máx. (95°p): 94100.0 km²
+2026-06-09 22:39:13,054 [INFO]   Risco alto (>60%): 668 zonas
+2026-06-09 22:39:13,054 [INFO]   Tempo simulação : 0.4396s
+2026-06-09 22:39:13,055 [INFO] 
+2026-06-09 22:39:13,055 [INFO] ============================================================
+2026-06-09 22:39:13,055 [INFO]   6. PROG. DINÂMICA — ALOCAÇÃO ÓTIMA DE RECURSOS
+2026-06-09 22:39:13,055 [INFO] ============================================================
+2026-06-09 22:39:13,055 [INFO] DP Knapsack: 6/10 regiões, impacto=385.0, orçamento usado=R$100M
+2026-06-09 22:39:13,055 [INFO]   Tempo DP=0.000093s vs força_bruta≈0.0010s (speedup ≈11.1x)
+2026-06-09 22:39:13,055 [INFO]   Orçamento total : R$ 100M
+2026-06-09 22:39:13,055 [INFO]   Impacto máximo  : 385.0 pts
+2026-06-09 22:39:13,055 [INFO]   Regiões atendidas:
+2026-06-09 22:39:13,056 [INFO]     Cerrado MT/PA        custo=R$25M  impacto=80
+2026-06-09 22:39:13,056 [INFO]     Pantanal             custo=R$20M  impacto=85
+2026-06-09 22:39:13,056 [INFO]     Cerrado GO/DF        custo=R$15M  impacto=60
+2026-06-09 22:39:13,056 [INFO]     Mata Atlântica SP    custo=R$18M  impacto=70
+2026-06-09 22:39:13,056 [INFO]     Pampa RS             custo=R$8M  impacto=35
+2026-06-09 22:39:13,056 [INFO]     Mata Atlântica BA    custo=R$14M  impacto=55
+2026-06-09 22:39:13,056 [INFO]   Tempo DP        : 0.000320s
+2026-06-09 22:39:13,056 [INFO]   Comparação — força bruta O(2^n): estimado 0.0010s
+2026-06-09 22:39:13,056 [INFO] 
+2026-06-09 22:39:13,056 [INFO] ============================================================
+2026-06-09 22:39:13,056 [INFO]   7. GERAÇÃO DE VISUALIZAÇÕES
+2026-06-09 22:39:13,057 [INFO] ============================================================
+2026-06-09 22:39:14,750 [INFO] Grafo salvo: output/grafo_incendios.png
+2026-06-09 22:39:15,182 [INFO] Mapa de calor salvo: output/mapa_calor.png
+2026-06-09 22:39:15,183 [INFO]   Gráficos salvos em output/
+2026-06-09 22:39:15,183 [INFO] 
+2026-06-09 22:39:15,183 [INFO] ============================================================
+2026-06-09 22:39:15,183 [INFO]   8. RELATÓRIO FINAL
+2026-06-09 22:39:15,183 [INFO] ============================================================
+2026-06-09 22:39:15,184 [INFO] Relatório salvo: output/relatorio_final.txt
+2026-06-09 22:39:15,184 [INFO]   Relatório salvo em output/relatorio_final.txt
+2026-06-09 22:39:15,184 [INFO] 
+2026-06-09 22:39:15,184 [INFO] ============================================================
+2026-06-09 22:39:15,185 [INFO]   EXECUÇÃO CONCLUÍDA
+2026-06-09 22:39:15,185 [INFO] ============================================================
+2026-06-09 22:39:15,185 [INFO]   Tempo total: 2.70s
+2026-06-09 22:39:34,011 [INFO] Iniciando sistema de monitoramento de incêndios florestais
+2026-06-09 22:39:34,012 [INFO] 
+2026-06-09 22:39:34,012 [INFO] ============================================================
+2026-06-09 22:39:34,012 [INFO]   1. CARREGAMENTO E PRÉ-PROCESSAMENTO DE DADOS
+2026-06-09 22:39:34,012 [INFO] ============================================================
+2026-06-09 22:39:34,013 [INFO] Focos carregados do cache local
+2026-06-09 22:39:34,013 [INFO]   Focos carregados  : 191
+2026-06-09 22:39:34,013 [INFO]   Bases de bombeiros: 7
+2026-06-09 22:39:34,013 [INFO]   Regiões analisadas: 10
+2026-06-09 22:39:34,013 [INFO] 
+2026-06-09 22:39:34,013 [INFO] ============================================================
+2026-06-09 22:39:34,013 [INFO]   2. CONSTRUÇÃO DO GRAFO DE FOCOS
+2026-06-09 22:39:34,013 [INFO] ============================================================
+2026-06-09 22:39:34,029 [INFO] Grafo construído: 198 nós, 1786 arestas (raio=400km)
+2026-06-09 22:39:34,029 [INFO]   Nós   : 198
+2026-06-09 22:39:34,030 [INFO]   Arestas: 1786
+2026-06-09 22:39:34,030 [INFO]   Componentes conectados: 2
+2026-06-09 22:39:34,030 [INFO]   Tempo de construção: 0.0162s
+2026-06-09 22:39:34,030 [INFO] 
+2026-06-09 22:39:34,030 [INFO] ============================================================
+2026-06-09 22:39:34,030 [INFO]   3. DIJKSTRA — CAMINHO MÍNIMO DE RESPOSTA
+2026-06-09 22:39:34,030 [INFO] ============================================================
+2026-06-09 22:39:34,031 [INFO]   Origem  : BASE_SP
+2026-06-09 22:39:34,031 [INFO]   Destino : F0110 (foco mais crítico)
+2026-06-09 22:39:34,031 [INFO]   Distância mínima: 3015.1 km
+2026-06-09 22:39:34,031 [INFO]   Caminho : BASE_SP → F0142 → F0088 → F0085 → F0012 → F0041 → F0045 → F0016 → F0119 → F0126 → F0110
+2026-06-09 22:39:34,031 [INFO]   Tempo Dijkstra : 0.000465s
+2026-06-09 22:39:34,034 [INFO]   Tempo BFS (força bruta): 0.002186s
+2026-06-09 22:39:34,034 [INFO] 
+2026-06-09 22:39:34,034 [INFO] ============================================================
+2026-06-09 22:39:34,034 [INFO]   4. ALGORITMO GULOSO — COBERTURA MÍNIMA DE BRIGADAS
+2026-06-09 22:39:34,034 [INFO] ============================================================
+2026-06-09 22:39:34,141 [INFO] Guloso: 5 brigadas cobrem 47/191 focos (24.6%)
+2026-06-09 22:39:34,141 [INFO]   Brigadas alocadas: 5
+2026-06-09 22:39:34,141 [INFO]   Focos cobertos   : 47 / 191 (24.6%)
+2026-06-09 22:39:34,142 [INFO]     Brigada 1: lat=-8.79, lon=-51.55, focos=11, FRP_total=668
+2026-06-09 22:39:34,142 [INFO]     Brigada 2: lat=-11.34, lon=-54.27, focos=11, FRP_total=595
+2026-06-09 22:39:34,142 [INFO]     Brigada 3: lat=-7.55, lon=-47.56, focos=10, FRP_total=588
+2026-06-09 22:39:34,142 [INFO]     Brigada 4: lat=-4.17, lon=-49.26, focos=9, FRP_total=449
+2026-06-09 22:39:34,142 [INFO]     Brigada 5: lat=-6.50, lon=-59.06, focos=6, FRP_total=428
+2026-06-09 22:39:34,142 [INFO]   Tempo guloso: 0.107089s
+2026-06-09 22:39:34,142 [INFO] 
+2026-06-09 22:39:34,142 [INFO] ============================================================
+2026-06-09 22:39:34,142 [INFO]   5. MONTE CARLO — SIMULAÇÃO DE PROPAGAÇÃO
+2026-06-09 22:39:34,142 [INFO] ============================================================
+2026-06-09 22:39:34,577 [INFO] Monte Carlo: média=90777km², P95=93800km², zonas_risco_alto=679
+2026-06-09 22:39:34,577 [INFO]   Simulações      : 500
+2026-06-09 22:39:34,577 [INFO]   Área média afetada : 90777.4 km²
+2026-06-09 22:39:34,577 [INFO]   Área máx. (95°p): 93800.0 km²
+2026-06-09 22:39:34,577 [INFO]   Risco alto (>60%): 679 zonas
+2026-06-09 22:39:34,578 [INFO]   Tempo simulação : 0.4346s
+2026-06-09 22:39:34,578 [INFO] 
+2026-06-09 22:39:34,578 [INFO] ============================================================
+2026-06-09 22:39:34,578 [INFO]   6. PROG. DINÂMICA — ALOCAÇÃO ÓTIMA DE RECURSOS
+2026-06-09 22:39:34,578 [INFO] ============================================================
+2026-06-09 22:39:34,578 [INFO] DP Knapsack: 6/10 regiões, impacto=385.0, orçamento usado=R$100M
+2026-06-09 22:39:34,578 [INFO]   Tempo DP=0.000094s vs força_bruta≈0.0010s (speedup ≈10.9x)
+2026-06-09 22:39:34,579 [INFO]   Orçamento total : R$ 100M
+2026-06-09 22:39:34,579 [INFO]   Impacto máximo  : 385.0 pts
+2026-06-09 22:39:34,579 [INFO]   Regiões atendidas:
+2026-06-09 22:39:34,579 [INFO]     Cerrado MT/PA        custo=R$25M  impacto=80
+2026-06-09 22:39:34,579 [INFO]     Pantanal             custo=R$20M  impacto=85
+2026-06-09 22:39:34,579 [INFO]     Cerrado GO/DF        custo=R$15M  impacto=60
+2026-06-09 22:39:34,579 [INFO]     Mata Atlântica SP    custo=R$18M  impacto=70
+2026-06-09 22:39:34,579 [INFO]     Pampa RS             custo=R$8M  impacto=35
+2026-06-09 22:39:34,579 [INFO]     Mata Atlântica BA    custo=R$14M  impacto=55
+2026-06-09 22:39:34,579 [INFO]   Tempo DP        : 0.000506s
+2026-06-09 22:39:34,580 [INFO]   Comparação — força bruta O(2^n): estimado 0.0010s
+2026-06-09 22:39:34,580 [INFO] 
+2026-06-09 22:39:34,580 [INFO] ============================================================
+2026-06-09 22:39:34,580 [INFO]   7. GERAÇÃO DE VISUALIZAÇÕES
+2026-06-09 22:39:34,580 [INFO] ============================================================
+2026-06-09 22:39:36,247 [INFO] Grafo salvo: output/grafo_incendios.png
+2026-06-09 22:39:36,672 [INFO] Mapa de calor salvo: output/mapa_calor.png
+2026-06-09 22:39:36,672 [INFO]   Gráficos salvos em output/
+2026-06-09 22:39:36,672 [INFO] 
+2026-06-09 22:39:36,673 [INFO] ============================================================
+2026-06-09 22:39:36,673 [INFO]   8. RELATÓRIO FINAL
+2026-06-09 22:39:36,673 [INFO] ============================================================
+2026-06-09 22:39:36,674 [INFO] Relatório salvo: output/relatorio_final.txt
+2026-06-09 22:39:36,674 [INFO]   Relatório salvo em output/relatorio_final.txt
+2026-06-09 22:39:36,674 [INFO] 
+2026-06-09 22:39:36,674 [INFO] ============================================================
+2026-06-09 22:39:36,674 [INFO]   EXECUÇÃO CONCLUÍDA
+2026-06-09 22:39:36,674 [INFO] ============================================================
+2026-06-09 22:39:36,675 [INFO]   Tempo total: 2.66s
+2026-06-09 22:40:21,392 [INFO] Iniciando sistema de monitoramento de incêndios florestais
+2026-06-09 22:40:21,393 [INFO] 
+2026-06-09 22:40:21,393 [INFO] ============================================================
+2026-06-09 22:40:21,393 [INFO]   1. CARREGAMENTO E PRÉ-PROCESSAMENTO DE DADOS
+2026-06-09 22:40:21,393 [INFO] ============================================================
+2026-06-09 22:40:21,394 [INFO] Focos carregados do cache local
+2026-06-09 22:40:21,394 [INFO]   Focos carregados  : 191
+2026-06-09 22:40:21,394 [INFO]   Bases de bombeiros: 7
+2026-06-09 22:40:21,394 [INFO]   Regiões analisadas: 10
+2026-06-09 22:40:21,394 [INFO] 
+2026-06-09 22:40:21,394 [INFO] ============================================================
+2026-06-09 22:40:21,394 [INFO]   2. CONSTRUÇÃO DO GRAFO DE FOCOS
+2026-06-09 22:40:21,394 [INFO] ============================================================
+2026-06-09 22:40:21,409 [INFO] Grafo construído: 198 nós, 1786 arestas (raio=400km)
+2026-06-09 22:40:21,409 [INFO]   Nós   : 198
+2026-06-09 22:40:21,410 [INFO]   Arestas: 1786
+2026-06-09 22:40:21,410 [INFO]   Componentes conectados: 2
+2026-06-09 22:40:21,410 [INFO]   Tempo de construção: 0.0154s
+2026-06-09 22:40:21,410 [INFO] 
+2026-06-09 22:40:21,410 [INFO] ============================================================
+2026-06-09 22:40:21,410 [INFO]   3. DIJKSTRA — CAMINHO MÍNIMO DE RESPOSTA
+2026-06-09 22:40:21,410 [INFO] ============================================================
+2026-06-09 22:40:21,411 [INFO]   Origem  : BASE_SP
+2026-06-09 22:40:21,411 [INFO]   Destino : F0110 (foco mais crítico)
+2026-06-09 22:40:21,411 [INFO]   Distância mínima: 3015.1 km
+2026-06-09 22:40:21,411 [INFO]   Caminho : BASE_SP → F0142 → F0088 → F0085 → F0012 → F0041 → F0045 → F0016 → F0119 → F0126 → F0110
+2026-06-09 22:40:21,411 [INFO]   Tempo Dijkstra : 0.000482s
+2026-06-09 22:40:21,414 [INFO]   Tempo BFS (força bruta): 0.002334s
+2026-06-09 22:40:21,414 [INFO] 
+2026-06-09 22:40:21,414 [INFO] ============================================================
+2026-06-09 22:40:21,414 [INFO]   4. ALGORITMO GULOSO — COBERTURA MÍNIMA DE BRIGADAS
+2026-06-09 22:40:21,414 [INFO] ============================================================
+2026-06-09 22:40:21,523 [INFO] Guloso: 5 brigadas cobrem 47/191 focos (24.6%)
+2026-06-09 22:40:21,523 [INFO]   Brigadas alocadas: 5
+2026-06-09 22:40:21,523 [INFO]   Focos cobertos   : 47 / 191 (24.6%)
+2026-06-09 22:40:21,523 [INFO]     Brigada 1: lat=-8.79, lon=-51.55, focos=11, FRP_total=668
+2026-06-09 22:40:21,524 [INFO]     Brigada 2: lat=-11.34, lon=-54.27, focos=11, FRP_total=595
+2026-06-09 22:40:21,524 [INFO]     Brigada 3: lat=-7.55, lon=-47.56, focos=10, FRP_total=588
+2026-06-09 22:40:21,524 [INFO]     Brigada 4: lat=-4.17, lon=-49.26, focos=9, FRP_total=449
+2026-06-09 22:40:21,524 [INFO]     Brigada 5: lat=-6.50, lon=-59.06, focos=6, FRP_total=428
+2026-06-09 22:40:21,524 [INFO]   Tempo guloso: 0.108819s
+2026-06-09 22:40:21,524 [INFO] 
+2026-06-09 22:40:21,524 [INFO] ============================================================
+2026-06-09 22:40:21,524 [INFO]   5. MONTE CARLO — SIMULAÇÃO DE PROPAGAÇÃO
+2026-06-09 22:40:21,524 [INFO] ============================================================
+2026-06-09 22:40:21,953 [INFO] Monte Carlo: média=90738km², P95=93800km², zonas_risco_alto=680
+2026-06-09 22:40:21,953 [INFO]   Simulações      : 500
+2026-06-09 22:40:21,953 [INFO]   Área média afetada : 90738.2 km²
+2026-06-09 22:40:21,953 [INFO]   Área máx. (95°p): 93800.0 km²
+2026-06-09 22:40:21,954 [INFO]   Risco alto (>60%): 680 zonas
+2026-06-09 22:40:21,954 [INFO]   Tempo simulação : 0.4287s
+2026-06-09 22:40:21,954 [INFO] 
+2026-06-09 22:40:21,954 [INFO] ============================================================
+2026-06-09 22:40:21,954 [INFO]   6. PROG. DINÂMICA — ALOCAÇÃO ÓTIMA DE RECURSOS
+2026-06-09 22:40:21,954 [INFO] ============================================================
+2026-06-09 22:40:21,955 [INFO] DP Knapsack: 6/10 regiões, impacto=385.0, orçamento usado=R$100M
+2026-06-09 22:40:21,955 [INFO]   Tempo DP=0.000137s vs força_bruta≈0.0010s (speedup ≈7.5x)
+2026-06-09 22:40:21,955 [INFO]   Orçamento total : R$ 100M
+2026-06-09 22:40:21,955 [INFO]   Impacto máximo  : 385.0 pts
+2026-06-09 22:40:21,955 [INFO]   Regiões atendidas:
+2026-06-09 22:40:21,955 [INFO]     Cerrado MT/PA        custo=R$25M  impacto=80
+2026-06-09 22:40:21,955 [INFO]     Pantanal             custo=R$20M  impacto=85
+2026-06-09 22:40:21,955 [INFO]     Cerrado GO/DF        custo=R$15M  impacto=60
+2026-06-09 22:40:21,955 [INFO]     Mata Atlântica SP    custo=R$18M  impacto=70
+2026-06-09 22:40:21,955 [INFO]     Pampa RS             custo=R$8M  impacto=35
+2026-06-09 22:40:21,956 [INFO]     Mata Atlântica BA    custo=R$14M  impacto=55
+2026-06-09 22:40:21,956 [INFO]   Tempo DP        : 0.000428s
+2026-06-09 22:40:21,956 [INFO]   Comparação — força bruta O(2^n): estimado 0.0010s
+2026-06-09 22:40:21,956 [INFO] 
+2026-06-09 22:40:21,956 [INFO] ============================================================
+2026-06-09 22:40:21,956 [INFO]   7. GERAÇÃO DE VISUALIZAÇÕES
+2026-06-09 22:40:21,956 [INFO] ============================================================
+2026-06-09 22:40:23,576 [INFO] Grafo salvo: output/grafo_incendios.png
+2026-06-09 22:40:24,006 [INFO] Mapa de calor salvo: output/mapa_calor.png
+2026-06-09 22:40:24,007 [INFO]   Gráficos salvos em output/
+2026-06-09 22:40:24,007 [INFO] 
+2026-06-09 22:40:24,007 [INFO] ============================================================
+2026-06-09 22:40:24,007 [INFO]   8. RELATÓRIO FINAL
+2026-06-09 22:40:24,007 [INFO] ============================================================
+2026-06-09 22:40:24,009 [INFO] Relatório salvo: output/relatorio_final.txt
+2026-06-09 22:40:24,009 [INFO]   Relatório salvo em output/relatorio_final.txt
+2026-06-09 22:40:24,009 [INFO] 
+2026-06-09 22:40:24,009 [INFO] ============================================================
+2026-06-09 22:40:24,009 [INFO]   EXECUÇÃO CONCLUÍDA
+2026-06-09 22:40:24,009 [INFO] ============================================================
+2026-06-09 22:40:24,009 [INFO]   Tempo total: 2.62s
+2026-06-09 22:41:32,923 [INFO] Iniciando sistema de monitoramento de incêndios florestais
+2026-06-09 22:41:32,923 [INFO] 
+2026-06-09 22:41:32,923 [INFO] ============================================================
+2026-06-09 22:41:32,923 [INFO]   1. CARREGAMENTO E PRÉ-PROCESSAMENTO DE DADOS
+2026-06-09 22:41:32,923 [INFO] ============================================================
+2026-06-09 22:41:32,924 [INFO] Focos carregados do cache local
+2026-06-09 22:41:32,924 [INFO]   Focos carregados  : 191
+2026-06-09 22:41:32,924 [INFO]   Bases de bombeiros: 7
+2026-06-09 22:41:32,924 [INFO]   Regiões analisadas: 10
+2026-06-09 22:41:32,924 [INFO] 
+2026-06-09 22:41:32,924 [INFO] ============================================================
+2026-06-09 22:41:32,924 [INFO]   2. CONSTRUÇÃO DO GRAFO DE FOCOS
+2026-06-09 22:41:32,925 [INFO] ============================================================
+2026-06-09 22:41:32,940 [INFO] Grafo construído: 198 nós, 1786 arestas (raio=400km)
+2026-06-09 22:41:32,941 [INFO]   Nós   : 198
+2026-06-09 22:41:32,941 [INFO]   Arestas: 1786
+2026-06-09 22:41:32,941 [INFO]   Componentes conectados: 2
+2026-06-09 22:41:32,941 [INFO]   Tempo de construção: 0.0160s
+2026-06-09 22:41:32,941 [INFO] 
+2026-06-09 22:41:32,942 [INFO] ============================================================
+2026-06-09 22:41:32,942 [INFO]   3. DIJKSTRA — CAMINHO MÍNIMO DE RESPOSTA
+2026-06-09 22:41:32,942 [INFO] ============================================================
+2026-06-09 22:41:32,942 [INFO]   Origem  : BASE_SP
+2026-06-09 22:41:32,942 [INFO]   Destino : F0110 (foco mais crítico)
+2026-06-09 22:41:32,943 [INFO]   Distância mínima: 3015.1 km
+2026-06-09 22:41:32,943 [INFO]   Caminho : BASE_SP → F0142 → F0088 → F0085 → F0012 → F0041 → F0045 → F0016 → F0119 → F0126 → F0110
+2026-06-09 22:41:32,943 [INFO]   Tempo Dijkstra : 0.000510s
+2026-06-09 22:41:32,945 [INFO]   Tempo BFS (força bruta): 0.002596s
+2026-06-09 22:41:32,946 [INFO] 
+2026-06-09 22:41:32,946 [INFO] ============================================================
+2026-06-09 22:41:32,946 [INFO]   4. ALGORITMO GULOSO — COBERTURA MÍNIMA DE BRIGADAS
+2026-06-09 22:41:32,946 [INFO] ============================================================
+2026-06-09 22:41:33,053 [INFO] Guloso: 5 brigadas cobrem 47/191 focos (24.6%)
+2026-06-09 22:41:33,053 [INFO]   Brigadas alocadas: 5
+2026-06-09 22:41:33,053 [INFO]   Focos cobertos   : 47 / 191 (24.6%)
+2026-06-09 22:41:33,053 [INFO]     Brigada 1: lat=-8.79, lon=-51.55, focos=11, FRP_total=668
+2026-06-09 22:41:33,053 [INFO]     Brigada 2: lat=-11.34, lon=-54.27, focos=11, FRP_total=595
+2026-06-09 22:41:33,053 [INFO]     Brigada 3: lat=-7.55, lon=-47.56, focos=10, FRP_total=588
+2026-06-09 22:41:33,053 [INFO]     Brigada 4: lat=-4.17, lon=-49.26, focos=9, FRP_total=449
+2026-06-09 22:41:33,053 [INFO]     Brigada 5: lat=-6.50, lon=-59.06, focos=6, FRP_total=428
+2026-06-09 22:41:33,054 [INFO]   Tempo guloso: 0.106625s
+2026-06-09 22:41:33,054 [INFO] 
+2026-06-09 22:41:33,054 [INFO] ============================================================
+2026-06-09 22:41:33,054 [INFO]   5. MONTE CARLO — SIMULAÇÃO DE PROPAGAÇÃO
+2026-06-09 22:41:33,054 [INFO] ============================================================
+2026-06-09 22:41:33,487 [INFO] Monte Carlo: média=90915km², P95=93900km², zonas_risco_alto=666
+2026-06-09 22:41:33,488 [INFO]   Simulações      : 500
+2026-06-09 22:41:33,488 [INFO]   Área média afetada : 90914.8 km²
+2026-06-09 22:41:33,488 [INFO]   Área máx. (95°p): 93900.0 km²
+2026-06-09 22:41:33,488 [INFO]   Risco alto (>60%): 666 zonas
+2026-06-09 22:41:33,488 [INFO]   Tempo simulação : 0.4337s
+2026-06-09 22:41:33,488 [INFO] 
+2026-06-09 22:41:33,488 [INFO] ============================================================
+2026-06-09 22:41:33,488 [INFO]   6. PROG. DINÂMICA — ALOCAÇÃO ÓTIMA DE RECURSOS
+2026-06-09 22:41:33,489 [INFO] ============================================================
+2026-06-09 22:41:33,489 [INFO] DP Knapsack: 6/10 regiões, impacto=385.0, orçamento usado=R$100M
+2026-06-09 22:41:33,489 [INFO]   Tempo DP=0.000092s vs força_bruta≈0.0010s (speedup ≈11.2x)
+2026-06-09 22:41:33,489 [INFO]   Orçamento total : R$ 100M
+2026-06-09 22:41:33,489 [INFO]   Impacto máximo  : 385.0 pts
+2026-06-09 22:41:33,489 [INFO]   Regiões atendidas:
+2026-06-09 22:41:33,489 [INFO]     Cerrado MT/PA        custo=R$25M  impacto=80
+2026-06-09 22:41:33,489 [INFO]     Pantanal             custo=R$20M  impacto=85
+2026-06-09 22:41:33,490 [INFO]     Cerrado GO/DF        custo=R$15M  impacto=60
+2026-06-09 22:41:33,490 [INFO]     Mata Atlântica SP    custo=R$18M  impacto=70
+2026-06-09 22:41:33,490 [INFO]     Pampa RS             custo=R$8M  impacto=35
+2026-06-09 22:41:33,490 [INFO]     Mata Atlântica BA    custo=R$14M  impacto=55
+2026-06-09 22:41:33,490 [INFO]   Tempo DP        : 0.000333s
+2026-06-09 22:41:33,490 [INFO]   Comparação — força bruta O(2^n): estimado 0.0010s
+2026-06-09 22:41:33,490 [INFO] 
+2026-06-09 22:41:33,490 [INFO] ============================================================
+2026-06-09 22:41:33,490 [INFO]   7. GERAÇÃO DE VISUALIZAÇÕES
+2026-06-09 22:41:33,490 [INFO] ============================================================
+2026-06-09 22:41:35,160 [INFO] Grafo salvo: output/grafo_incendios.png
+2026-06-09 22:41:35,599 [INFO] Mapa de calor salvo: output/mapa_calor.png
+2026-06-09 22:41:35,599 [INFO]   Gráficos salvos em output/
+2026-06-09 22:41:35,599 [INFO] 
+2026-06-09 22:41:35,599 [INFO] ============================================================
+2026-06-09 22:41:35,599 [INFO]   8. RELATÓRIO FINAL
+2026-06-09 22:41:35,600 [INFO] ============================================================
+2026-06-09 22:41:35,601 [INFO] Relatório salvo: output/relatorio_final.txt
+2026-06-09 22:41:35,601 [INFO]   Relatório salvo em output/relatorio_final.txt
+2026-06-09 22:41:35,601 [INFO] 
+2026-06-09 22:41:35,601 [INFO] ============================================================
+2026-06-09 22:41:35,601 [INFO]   EXECUÇÃO CONCLUÍDA
+2026-06-09 22:41:35,601 [INFO] ============================================================
+2026-06-09 22:41:35,601 [INFO]   Tempo total: 2.68s

@@ -26,7 +26,7 @@ Fornecer uma ferramenta computacional que auxilie o PREVFOGO e Corpos de Bombeir
 
 ## 🌎 Tema Escolhido
 
-**Incêndios florestais e focos de calor** — o Brasil concentra uma das maiores incidências mundiais de focos de calor, especialmente no Cerrado e Amazônia. A análise em tempo real com dados de satélite é fundamental para resposta rápida e planejamento preventivo.
+**Incêndios florestais e focos de calor** o Brasil concentra uma das maiores incidências mundiais de focos de calor, especialmente no Cerrado e Amazônia. A análise em tempo real com dados de satélite é fundamental para resposta rápida e planejamento preventivo.
 
 ---
 
@@ -175,12 +175,13 @@ Os resultados são gerados em `output/` e os logs em `logs/execucao.log`.
 
 | Nome Completo | RM |
 |---------------|----|
-| [Nome do Integrante 1] | RM XXXXX |
-| [Nome do Integrante 2] | RM XXXXX |
-| [Nome do Integrante 3] | RM XXXXX |
+| Enzo Luciano | RM 559557 |
+| Alexandre Colvet | RM 560059 |
+| Luigi Thiengo | RM 560755 |
+| Pedro Scarceli | RM 561023 |
 
 ---
 
 ## 📄 Licença
 
-Projeto acadêmico — FIAP 2025. Dados NASA FIRMS sob [licença pública NASA](https://firms.modaps.eosdis.nasa.gov/api/).
+Projeto acadêmico FIAP 2026. Dados NASA FIRMS sob [licença pública NASA](https://firms.modaps.eosdis.nasa.gov/api/).
